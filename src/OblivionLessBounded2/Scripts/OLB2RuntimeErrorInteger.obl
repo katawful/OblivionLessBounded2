@@ -1,0 +1,20 @@
+﻿scn OLB2RuntimeErrorInteger
+
+;;@TYPE~User-Defined Function~
+;;@DESC~Prints runtime error message for integer values. Outputs value used and calling formID.~
+;;@PARA~@int::iValue::Error value~
+int iValue
+;;@PARA~@string::sType::The type of integer (bool or integer)~
+string_var sType
+;;@PARA~@string::sSource::Source of where this function is called, not the source of the error~
+string_var sSource
+;;@PARA~@ref::rCallingScript::Script error presented from. This is not where the source should be~
+ref rCallingScript
+
+
+begin function {iValue, sType, sSource, rCallingScript}
+
+	PrintC "OLB2 ERROR: Invalid %z value '%g' for '%z' from script:%r--FORMID: %i" sType iValue sSource rCallingScript
+
+	sv_Destruct sType
+end
