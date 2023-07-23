@@ -101,10 +101,12 @@ begin gamemode
 	;;KAT INFO: Handle controls and first person in gamemode
 	if eval GetStage Charactergen < 7 && GetStage Charactergen != 0
 		ToggleFirstPerson 1 ; force 1st person no matter what
-		DisableMouse
-		let OLB2Quest.bMouseEnabled := 0
-		DisablePlayerControls
-		let OLB2Quest.bControlsEnabled := 0
+
+		;; DISABLE MOUSE
+		call OLB2ControlMouse 0
+
+		;; DISABLE CONTROLS
+		Call OLB2ControlControls 0
 	endif
 
 	; *********************************************************************************************
