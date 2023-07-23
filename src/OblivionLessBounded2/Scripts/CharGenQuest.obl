@@ -74,191 +74,205 @@ short debug
 
 float fQuestDelayTime	; for quest script timing
 
+;;;KAT INFO: We want to close the race menu asap, and set the weather and time ideally
+begin menumode 1036
+	if GetStage Charactergen < 7
+		;;KAT NOTE: I don't know if I want clear weather or not
+		;ForceWeather Clear
+		Set GameHour to 7
+		CloseAllMenus
+		ToggleFirstPerson 1
+		DisableMouse
+		DisablePlayerControls
+	endif
+end
+
 
 begin gamemode
 
-; count down timer
-	if convTimer > 0
-		set convTimer to convTimer - getSecondsPassed
+	; count down timer
+	if eval convTimer > 0
+		set convTimer to convTimer - GetSecondsPassed
 	endif
 
-; bring up race menu first
-if getstage CharacterGen == 0
-	setstage characterGen 5
-endif
-
-; *********************************************************************************************
-; Large IF block to help script processing speed (skip over chunks when not needed)
-; *********************************************************************************************
-IF getstage charactergen < 30
-
-; when emperor finished reacting to player, trigger him to force-greet
-if getstage characterGen == 16 && convTimer <= 0
-	setstage characterGen 17
-endif
-
-
-; when secret door is open, trigger everyone to go through it
-if getstage characterGen == 18 && secretDoor == 1 && convTimer <= 0
-	setstage characterGen 19
-endif
-
-; trigger ambush A
-if getstage CharacterGen == 20 && ( CGMarkerCEmperor.getdistance player < 480 || CGMarkerC2Renote.getdistance player < 900 )
-	setstage CharacterGen 22
-endif
-
-; make sure things progress even if player isn't listening to conversation
-if getstage CharacterGen == 26 && player.getdistance GlenroyRef > 2000
-	if debug == 1
-		messagebox "CharGenQuest script: setting stage 28 because player is not near Glenroy"
+	; bring up race menu first
+	;;KAT INFO: "Charactergen" quest starts at 0 and jumps to 5 to set the player's location
+	if eval GetStage Charactergen == 0
+		SetStage Charactergen 5
 	endif
-	setstage CharacterGen 28
-endif
 
-; Baurus warns player not to follow
-if getstage CharacterGen == 28 && player.getdistance BaurusRef < 800 && convTimer <= 0 && baurusWarn == 0
-	set convTimer to BaurusRef.SayTo player CharGenVoice 1
-	set baurusWarn to 1
-endif
+	; *********************************************************************************************
+	; Large IF block to help script processing speed (skip over chunks when not needed)
+	; *********************************************************************************************
+	IF eval GetStage Charactergen < 30
 
-if getstage CharacterGen == 28 && convTimer <= 0 && baurusWarn == 1
-	setstage charactergen 29
-endif
-
-ENDIF	; stage < 30
-; *********************************************************************************************
-
-
-
-; *********************************************************************************************
-; Large IF block to help script processing speed (skip over chunks when not needed)
-; *********************************************************************************************
-IF getstage charactergen >= 30 && getstage charactergen < 50
-
-; next phase -- assassins are dead
-if getstage CharacterGen == 34 && ambushCount >=2
-	setstage CharacterGen 36
-endif
-
-
-; next phase -- player gets close to NPCs in Room B
-if getstage CharacterGen >= 36 && getstage CharacterGen < 40 && inAmbushBRoom == 1
-	if ( GlenroyRef.getdetected player == 1 || BaurusRef.getdetected player == 1 )
-		set ambushCount to 2
-		setstage CharacterGen 40
-	endif
-endif
-
-; put up birthsign menu
-if getstage CharacterGen == 43
-	ShowBirthsignMenu
-	setstage CharacterGen 44
-endif
-
-if getstage CharacterGen == 45 && convTimer <= 0
-	setstage CharacterGen 50
-endif
-
-ENDIF	; getstage charactergen >= 30 && getstage charactergen < 50
-; *********************************************************************************************
-
-
-
-; *********************************************************************************************
-; Large IF block to help script processing speed (skip over chunks when not needed)
-; *********************************************************************************************
-IF getstage charactergen >= 50 && getstage charactergen < 70
-
-
-; next phase -- player gets close to NPCs at Marker F
-if getstage CharacterGen == 52 && player.getdistance UrielSeptimRef < 500
-	; move out
-	setstage CharacterGen 54
-endif
-
-; next phase -- player gets close to NPCs at Marker G
-if getstage CharacterGen == 56 && player.getdistance UrielSeptimRef < 500
-	; wait until Baurus and Emperor are both in the cell before proceeding
-	if BaurusRef.getincell ImperialDungeon03 == 1 && UrielSeptimRef.getincell ImperialDungeon03
-		; move out
-		setstage CharacterGen 58
-	endif
-endif
-
-if getstage CharacterGen == 58 && convTimer <= 0
-	setstage CharacterGen 59
-endif
-
-; after Glenroy & Baurus discuss locked gate at I, move on
-if getstage CharacterGen == 65 && convTimer <= 0
-	setstage CharacterGen 66
-endif
-
-; next phase -- player gets close to NPCs at Marker J
-if getstage CharacterGen == 68 && player.getdistance UrielSeptimRef < 300
-	; move out
-	setstage CharacterGen 70
-endif
-
-ENDIF	; getstage charactergen >= 50 && getstage charactergen < 70
-; *********************************************************************************************
-
-
-
-; *********************************************************************************************
-; Large IF block to help script processing speed (skip over chunks when not needed)
-; *********************************************************************************************
-IF getstage charactergen >= 70
-
-
-; after Glenroy & Baurus realize they are trapped, move on
-if getstage CharacterGen == 71 && convTimer <= 0
-	setstage CharacterGen 72
-endif
-
-; after pause, Emperor will force-greet player
-if getstage CharacterGen == 72 && convTimer <= 0
-	setstage CharacterGen 73
-endif
-
-; generate new assassins for Ambush C
-if getstage CharacterGen >= 72 && getstage CharacterGen < 74
-	if getdeadcount CGMythicDawnAssassinAmbushC >= ambushCount
-		CGAmbushCMarker.placeatme CGMythicDawnAssassinAmbushC 1
-		CGAmbushC2Marker.placeatme CGMythicDawnAssassinAmbushC 1
-		CGAmbushC3Marker.placeatme CGMythicDawnAssassinAmbushC 1
-		set ambushCount to getdeadcount CGMythicDawnAssassinAmbushC + 3
-		if debug == 1
-			messageBox "DEBUG: CharGen generating 3 new assassins."
+		; when emperor finished reacting to player, trigger him to force-greet
+		if eval GetStage Charactergen == 16 && convTimer <= 0
+			SetStage Charactergen 17
 		endif
-		if ambushCount >= 6 && GlenRoyRef.GetDead == 0
-			set GlenroyRef.dieNextHit to 1
+
+
+		; when secret door is open, trigger everyone to go through it
+		if eval GetStage Charactergen == 18 && secretDoor == 1 && convTimer <= 0
+			SetStage Charactergen 19
 		endif
-	endif
-endif
 
-; after assassin speaks to player, move on
-;if getstage CharacterGen == 80 && convTimer <= 0
-;	setstage CharacterGen 82
-;endif
+		; trigger ambush A
+		if eval GetStage Charactergen == 20 && ( CGMarkerCEmperor.GetDistance Player < 480 || CGMarkerC2Renote.GetDistance Player < 900 )
+			SetStage Charactergen 22
+		endif
 
-; after Baurus kneels by Emperor, move on
-if getstage CharacterGen == 85 && convTimer <= 0
-	setstage CharacterGen 86
-endif
+		; make sure things progress even if player isn't listening to conversation
+		if eval GetStage Charactergen == 26 && Player.GetDistance GlenroyRef > 2000
+			if eval debug == 1
+				MessageBox "CharGenQuest script: setting stage 28 because player is not near Glenroy"
+			endif
+			SetStage Charactergen 28
+		endif
+
+		; Baurus warns player not to follow
+		if eval GetStage Charactergen == 28 && Player.GetDistance BaurusRef < 800 && convTimer <= 0 && baurusWarn == 0
+			set convTimer to BaurusRef.SayTo Player CharGenVoice 1
+			set baurusWarn to 1
+		endif
+
+		if eval GetStage Charactergen == 28 && convTimer <= 0 && baurusWarn == 1
+			SetStage Charactergen 29
+		endif
+
+	ENDIF	; stage < 30
+	; *********************************************************************************************
 
 
-if baurusTimer > 0
-	set baurusTimer to baurusTimer - getsecondspassed
-else
-	if getstage CharacterGen == 73 && player.getdistance UrielSeptimRef > 500 && player.getdistance BaurusRef < 800
-		BaurusRef.SayTo player CharGenVoice
-		set baurusTimer to 15
-	endif
-endif
 
-ENDIF	; getstage charactergen >= 70
-; *********************************************************************************************
+	; *********************************************************************************************
+	; Large IF block to help script processing speed (skip over chunks when not needed)
+	; *********************************************************************************************
+	IF eval GetStage Charactergen >= 30 && GetStage Charactergen < 50
+
+		; next phase -- assassins are dead
+		if eval GetStage Charactergen == 34 && ambushCount >=2
+			SetStage Charactergen 36
+		endif
+
+
+		; next phase -- player gets close to NPCs in Room B
+		if eval GetStage Charactergen >= 36 && GetStage Charactergen < 40 && inAmbushBRoom == 1
+			if eval ( GlenroyRef.GetDetected Player == 1 || BaurusRef.GetDetected Player == 1 )
+				set ambushCount to 2
+				SetStage Charactergen 40
+			endif
+		endif
+
+		; put up birthsign menu
+		if eval GetStage Charactergen == 43
+			ShowBirthSignMenu
+			SetStage Charactergen 44
+		endif
+
+		if eval GetStage Charactergen == 45 && convTimer <= 0
+			SetStage Charactergen 50
+		endif
+
+	ENDIF	; getstage charactergen >= 30 && getstage charactergen < 50
+	; *********************************************************************************************
+
+
+
+	; *********************************************************************************************
+	; Large IF block to help script processing speed (skip over chunks when not needed)
+	; *********************************************************************************************
+	IF eval GetStage Charactergen >= 50 && GetStage Charactergen < 70
+
+
+		; next phase -- player gets close to NPCs at Marker F
+		if eval GetStage Charactergen == 52 && Player.GetDistance UrielSeptimRef < 500
+			; move out
+			SetStage Charactergen 54
+		endif
+
+		; next phase -- player gets close to NPCs at Marker G
+		if eval GetStage Charactergen == 56 && Player.GetDistance UrielSeptimRef < 500
+			; wait until Baurus and Emperor are both in the cell before proceeding
+			if eval BaurusRef.GetInCell ImperialDungeon03 == 1 && UrielSeptimRef.GetInCell ImperialDungeon03
+				; move out
+				SetStage Charactergen 58
+			endif
+		endif
+
+		if eval GetStage Charactergen == 58 && convTimer <= 0
+			SetStage Charactergen 59
+		endif
+
+		; after Glenroy & Baurus discuss locked gate at I, move on
+		if eval GetStage Charactergen == 65 && convTimer <= 0
+			SetStage Charactergen 66
+		endif
+
+		; next phase -- player gets close to NPCs at Marker J
+		if eval GetStage Charactergen == 68 && Player.GetDistance UrielSeptimRef < 300
+			; move out
+			SetStage Charactergen 70
+		endif
+
+	ENDIF	; getstage charactergen >= 50 && getstage charactergen < 70
+	; *********************************************************************************************
+
+
+
+	; *********************************************************************************************
+	; Large IF block to help script processing speed (skip over chunks when not needed)
+	; *********************************************************************************************
+	IF eval GetStage Charactergen >= 70
+
+
+		; after Glenroy & Baurus realize they are trapped, move on
+		if eval GetStage Charactergen == 71 && convTimer <= 0
+			SetStage Charactergen 72
+		endif
+
+		; after pause, Emperor will force-greet player
+		if eval GetStage Charactergen == 72 && convTimer <= 0
+			SetStage Charactergen 73
+		endif
+
+		; generate new assassins for Ambush C
+		if eval GetStage Charactergen >= 72 && GetStage Charactergen < 74
+			if eval GetDeadCount CGMythicDawnAssassinAmbushC >= ambushCount
+				CGAmbushCMarker.PlaceAtMe CGMythicDawnAssassinAmbushC 1
+				CGAmbushC2Marker.PlaceAtMe CGMythicDawnAssassinAmbushC 1
+				CGAmbushC3Marker.PlaceAtMe CGMythicDawnAssassinAmbushC 1
+				set ambushCount to GetDeadCount CGMythicDawnAssassinAmbushC + 3
+				if eval debug == 1
+					MessageBox "DEBUG: CharGen generating 3 new assassins."
+				endif
+				if eval ambushCount >= 6 && GlenroyRef.GetDead == 0
+					set GlenroyRef.dieNextHit to 1
+				endif
+			endif
+		endif
+
+		; after assassin speaks to player, move on
+		;if getstage CharacterGen == 80 && convTimer <= 0
+		;	setstage CharacterGen 82
+		;endif
+
+		; after Baurus kneels by Emperor, move on
+		if eval GetStage Charactergen == 85 && convTimer <= 0
+			SetStage Charactergen 86
+		endif
+
+
+		if eval baurusTimer > 0
+			set baurusTimer to baurusTimer - GetSecondsPassed
+		else
+			if eval GetStage Charactergen == 73 && Player.GetDistance UrielSeptimRef > 500 && Player.GetDistance BaurusRef < 800
+				BaurusRef.SayTo Player CharGenVoice
+				set baurusTimer to 15
+			endif
+		endif
+
+	ENDIF	; getstage charactergen >= 70
+	; *********************************************************************************************
 
 end
