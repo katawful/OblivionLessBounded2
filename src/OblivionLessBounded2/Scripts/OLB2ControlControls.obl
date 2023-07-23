@@ -1,0 +1,22 @@
+﻿scn OLB2ControlControls
+
+;;@TYPE~User-Defined Function~
+;;@DESC~Controls player controls, truthy for enable falsy for disable. Changes `OLB2Quest.bControlsEnable`
+;;for notification~
+;;@PARA~@bool::bEnable::Enable controls?~
+int bEnable
+
+ref rCallingFunction		;@ref::rCallingFunction::The calling function
+
+begin function {bEnable}
+	if bEnable > 0
+		EnablePlayerControls
+		Let OLB2Quest.bControlsEnabled := 1
+	elseif bEnable == 0
+		DisablePlayerControls
+		Let OLB2Quest.bControlsEnabled := 0
+	elseif bEnable < 0
+		Let rCallingFunction := GetCallingScript
+		Call OLB2RuntimeErrorInteger bEnable "boolean" "OLB2ControlControls" rCallingFunction
+	endif
+end

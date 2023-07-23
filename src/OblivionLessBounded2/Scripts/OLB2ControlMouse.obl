@@ -1,0 +1,22 @@
+﻿scn OLB2ControlMouse
+
+;;@TYPE~User-Defined Function~
+;;@DESC~Controls mouse, truthy for enable falsy for disable. Changes `OLB2Quest.bMouseEnable`
+;;for notification~
+;;@PARA~@bool::bEnable::Enable mouse?~
+int bEnable
+
+ref rCallingFunction		;@ref::rCallingFunction::The calling function
+
+begin function {bEnable}
+	if bEnable > 0
+		EnableMouse
+		Let OLB2Quest.bMouseEnabled := 1
+	elseif bEnable == 0
+		DisableMouse
+		Let OLB2Quest.bMouseEnabled := 0
+	elseif bEnable < 0
+		Let rCallingFunction := GetCallingScript
+		Call OLB2RuntimeErrorInteger bEnable "boolean" "OLB2ControlMouse" rCallingFunction
+	endif
+end
