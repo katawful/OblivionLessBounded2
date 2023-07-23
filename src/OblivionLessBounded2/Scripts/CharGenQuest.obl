@@ -81,9 +81,6 @@ begin menumode 1036
 		;ForceWeather Clear
 		Set GameHour to 7
 		CloseAllMenus
-		ToggleFirstPerson 1
-		DisableMouse
-		DisablePlayerControls
 	endif
 end
 
@@ -99,6 +96,15 @@ begin gamemode
 	;;KAT INFO: "Charactergen" quest starts at 0 and jumps to 5 to set the player's location
 	if eval GetStage Charactergen == 0
 		SetStage Charactergen 5
+	endif
+
+	;;KAT INFO: Handle controls and first person in gamemode
+	if eval GetStage Charactergen < 7 && GetStage Charactergen != 0
+		ToggleFirstPerson 1 ; force 1st person no matter what
+		DisableMouse
+		let OLB2Quest.bMouseEnabled := 0
+		DisablePlayerControls
+		let OLB2Quest.bControlsEnabled := 0
 	endif
 
 	; *********************************************************************************************

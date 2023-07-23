@@ -1,0 +1,8 @@
+﻿scn OLB2QuestScript
+
+;;@TYPE~Quest~
+;;@OBJT~OLB2Quest~
+;;@DESC~This mainly stores variables for OLB2 to use~
+
+int bMouseEnabled		;@bool::bMouseEnabled::Is our mouse enabled?
+int bControlsEnabled		;@bool::bControlsEnabled::Is our controls enabled?
