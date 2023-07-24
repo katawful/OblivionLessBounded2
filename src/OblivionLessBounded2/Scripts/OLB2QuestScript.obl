@@ -4,5 +4,22 @@
 ;;@OBJT~OLB2Quest~
 ;;@DESC~This mainly stores variables for OLB2 to use~
 
+float fQuestDelayTime
+
 int bMouseEnabled		;@bool::bMouseEnabled::Is our mouse enabled?
 int bControlsEnabled		;@bool::bControlsEnabled::Is our controls enabled?
+
+int iDoOnce				;@int::iDoOnce::Do once
+
+array_var smScanCodes	;@stringmap::smScanCodes::Scan codes of all keys, with the key as the string name and the value as the integer scan code
+
+begin MenuMode
+
+	;;KAT INFO: We need to load scan codes.
+	;;Since this quest has high priority and runs at a high rate, this will
+	;;force this stringmap to load before anything else.
+	if eval iDoOnce == 0
+		Call OLB2InitScanCodes
+		Let iDoOnce := 1
+	endif
+end
