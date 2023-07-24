@@ -74,7 +74,8 @@ short debug
 
 float fQuestDelayTime	; for quest script timing
 
-;;;KAT INFO: We want to close the race menu asap, and set the weather and time ideally
+;;;KAT INFO: We want to close the race menu asap
+;;;We want this stuff to happen as soon as possible, which is why it happens in this block
 begin menumode 1036
 	if GetStage Charactergen < 7
 		;;KAT NOTE: I don't know if I want clear weather or not
@@ -94,19 +95,24 @@ begin gamemode
 
 	; bring up race menu first
 	;;KAT INFO: "Charactergen" quest starts at 0 and jumps to 5 to set the player's location
+	;;This **cannot** be changed
 	if eval GetStage Charactergen == 0
 		SetStage Charactergen 5
 	endif
 
-	;;KAT INFO: Handle controls and first person in gamemode
+	;;KAT INFO: Handle controls and first person in gamemode.
+	;;We want stuff to happen as soon as it can possibly happen.
 	if eval GetStage Charactergen < 7 && GetStage Charactergen != 0
 		ToggleFirstPerson 1 ; force 1st person no matter what
 
 		;; DISABLE MOUSE
-		call OLB2ControlMouse 0
+		Call OLB2ControlMouse 0
 
 		;; DISABLE CONTROLS
 		Call OLB2ControlControls 0
+
+		;; Start OLB2
+		Call OLB2Init
 	endif
 
 	; *********************************************************************************************

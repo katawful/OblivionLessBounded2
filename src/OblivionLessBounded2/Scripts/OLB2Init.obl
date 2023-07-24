@@ -1,0 +1,28 @@
+﻿scn OLB2Init
+
+;;@TYPE~User-Defined Function~
+;;@DESC~Initialize the start of OLB2~
+
+int iStage		;@int::iStage::Stage of OLB2Quest
+int iKey			;@int::iKey::Key to check
+
+begin function {}
+
+	;; Store stage for repeated usage
+	Let iStage := GetStage OLB2Quest
+
+	;********************OLB2Quest Stage 0**********************
+	if iStage == 0
+		MessageEX "Welcome to Oblivion Less Bounded!%rControls will be paused until you enter the menu with X"
+		SetStage OLB2Quest 10
+	endif
+
+	;********************OLB2Quest Stage 10*********************
+	;;KAT INFO: This stage simply waits until there's user input so that
+	;;the menu can be launched. Once that menu is launched, we can progress
+	if iStage == 10
+		Let iKey := OLB2Quest.smScanCodes["X"]
+		if IsKeyPressed3 iKey
+		endif
+	endif
+end
