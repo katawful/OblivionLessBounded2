@@ -1,0 +1,54 @@
+<!--OLB\Vanilla\main.xml-->
+
+<!--
+This menu controls OLB2. It provides 2 main panes:
+__ Preset
+__ Custom
+
+"Preset" simply communicates the presets for starting:
+    * Start normal game
+    * Start in new location
+    * Class suggestions
+    * Race menu button
+    * Randomizer settings
+
+"Custom" allows you to adjust anything
+    * Starting equipment and spells
+    * Starting location
+    * Main quest start or no
+    * Randomizer settings for all that
+    * Race menu (including random race)
+-->
+
+<menu name="olb_main">
+    <class> &GenericMenu; </class>
+    <stacking_type> &no_click_past; </stacking_type>
+    <explorefad> 0.25 </explorefad>
+    <locus> &true; </locus>
+
+    <rect name="olb_main_pane">
+        <include name="generic_background.xml"/>
+        <visible> &true; </visible>
+        <id> 100 </id>
+        <locus> &true; </locus>
+        <depth> 0 </depth>
+        <user0>
+            <copy src="screen()" trait="width"/>
+            <sub> 200 </sub>
+        </user0>
+        <user1>
+            <copy src="screen()" trait="height"/>
+            <sub> 200 </sub>
+        </user1>
+        <x>
+            <copy src="screen()" trait="width" />
+            <sub src="me()" trait="width" />
+            <div> 2 </div>
+        </x>
+        <y>
+            <copy src="screen()" trait="height" />
+            <sub src="me()" trait="height" />
+            <div> 2 </div>
+        </y>
+    </rect>
+</menu>
