@@ -1,0 +1,14 @@
+﻿scn OLB2InitKeyHandler
+
+;;@TYPE~User-Defined Function~
+;;@DESC~For menu launch event handler~
+;;@PARA~@int::iKey::Scan key~
+int iKey
+;;@PARA~@int::iAction::Key press mode~
+int iAction
+
+begin function {iKey, iAction}
+	Call GMFShowMenu "Kat\OLB2\Vanilla\main.xml" 200
+	Call OLB2ControlMouse 1
+	RemoveEventHandler "OnKeyEvent" OLB2InitKeyHandler
+end

@@ -1,0 +1,18 @@
+﻿scn OLB2OnClick116Handler
+
+;;@TYPE~User-Defined Function~
+;;@DESC~This handles clicking id 116. This just highlights ID 115 with a border~
+
+;;@PARA~@int::iMenuType::Menu type~
+int iMenuType
+;;@PARA~@int::sTile::Tile being clicked~
+string_var sTile
+;;@PARA~@int::iID::ID being clicked~
+int iID
+
+begin function {iMenuType, sTile, iID}
+	call GMFSetTileFloatValue "olb_main_pane\olb_header\olb_header_panel_tab\olb_header_panel_box_preset" "user0" 0
+	call GMFSetTileFloatValue "olb_main_pane\olb_header\olb_header_panel_tab\olb_header_panel_box_preset" "user0" 0
+	call GMFSetTileFloatValue "olb_main_pane\olb_header\olb_header_panel_tab\olb_header_panel_box_custom" "user0" 1
+	call GMFSetTileFloatValue "olb_main_pane\olb_header\olb_header_panel_tab\olb_header_panel_box_custom" "user0" 1
+end

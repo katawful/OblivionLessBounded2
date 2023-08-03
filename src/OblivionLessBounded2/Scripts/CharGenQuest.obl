@@ -85,7 +85,6 @@ begin menumode 1036
 	endif
 end
 
-
 begin gamemode
 
 	; count down timer
@@ -103,7 +102,9 @@ begin gamemode
 	;;KAT INFO: Handle controls and first person in gamemode.
 	;;We want stuff to happen as soon as it can possibly happen.
 	if eval GetStage Charactergen < 7 && GetStage Charactergen != 0
-		ToggleFirstPerson 1 ; force 1st person no matter what
+
+		;; Force first person, 3rd person is used for race menu
+		ToggleFirstPerson 1
 
 		;; DISABLE MOUSE
 		Call OLB2ControlMouse 0
@@ -111,6 +112,10 @@ begin gamemode
 		;; DISABLE CONTROLS
 		Call OLB2ControlControls 0
 
+		SetStage Charactergen 6
+	endif
+
+	if eval GetStage Charactergen == 6
 		;; Start OLB2
 		Call OLB2Init
 	endif

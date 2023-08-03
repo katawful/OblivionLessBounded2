@@ -11,6 +11,8 @@ int bControlsEnabled		;@bool::bControlsEnabled::Is our controls enabled?
 
 int iDoOnce				;@int::iDoOnce::Do once
 
+ref rFunction			;@ref::rFunction::To pass
+
 array_var smScanCodes	;@stringmap::smScanCodes::Scan codes of all keys, with the key as the string name and the value as the integer scan code
 
 begin MenuMode
@@ -21,5 +23,19 @@ begin MenuMode
 	if eval iDoOnce == 0
 		Call OLB2InitScanCodes
 		Let iDoOnce := 1
+		let fQuestDelayTime := 0.001
+	endif
+end
+
+begin MenuMode 1011
+	if iDoOnce != 200
+
+		;;KAT INFO: Handle clicking tabs
+		let rFunction := OLB2OnClick115Handler
+		call GMFSetOnClickByIDHandler rFunction 115
+		let rFunction := OLB2OnClick116Handler
+		call GMFSetOnClickByIDHandler rFunction 116
+
+		let iDoOnce := 200
 	endif
 end

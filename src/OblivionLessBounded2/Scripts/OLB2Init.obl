@@ -12,7 +12,7 @@ begin function {}
 	Let iStage := GetStage OLB2Quest
 
 	;********************OLB2Quest Stage 0**********************
-	if iStage == 0
+	if eval iStage == 0
 		MessageEX "Welcome to Oblivion Less Bounded!%rControls will be paused until you enter the menu with X"
 		SetStage OLB2Quest 10
 	endif
@@ -20,9 +20,11 @@ begin function {}
 	;********************OLB2Quest Stage 10*********************
 	;;KAT INFO: This stage simply waits until there's user input so that
 	;;the menu can be launched. Once that menu is launched, we can progress
-	if iStage == 10
+	if eval iStage == 10
 		Let iKey := OLB2Quest.smScanCodes["X"]
-		if IsKeyPressed3 iKey
+		if eval OLB2Quest.iDoOnce != 111
+			SetEventHandler "OnKeyEvent" OLB2InitKeyHandler first::iKey second::0
+			Let OLB2Quest.iDoOnce := 111
 		endif
 	endif
 end
