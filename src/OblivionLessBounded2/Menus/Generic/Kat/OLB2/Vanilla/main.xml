@@ -20,26 +20,19 @@ __ Custom
     * Race menu (including random race)
 -->
 
-<menu name="olb_main">
+<menu name="OLBMain">
     <class> &GenericMenu; </class>
-    <stacking_type> &no_click_past; </stacking_type>
-    <explorefad> 0.25 </explorefad>
+    <stackingtype> &no_click_past; </stackingtype>
+    <explorefade> 0.25 </explorefade>
     <locus> &true; </locus>
 
     <rect name="olb_main_pane">
         <include name="generic_background.xml"/>
         <visible> &true; </visible>
         <id> 100 </id>
-        <locus> &true; </locus>
-        <depth> 0 </depth>
-        <user0>
-            <copy src="screen()" trait="width"/>
-            <sub> 200 </sub>
-        </user0>
-        <user1>
-            <copy src="screen()" trait="height"/>
-            <sub> 200 </sub>
-        </user1>
+        <depth> 10 </depth>
+        <user0> 800 </user0> <!-- width -->
+        <user1> 600 </user1> <!-- height -->
         <x>
             <copy src="screen()" trait="width" />
             <sub src="me()" trait="width" />
@@ -50,5 +43,248 @@ __ Custom
             <sub src="me()" trait="height" />
             <div> 2 </div>
         </y>
+        <rect name="olb_header">
+            <visible> &true; </visible>
+            <id> 110 </id>
+            <depth> 20 </depth>
+            <x> <copy src="parent()" trait="width"/> </x>
+            <y> <copy src="parent()" trait="height"/> </y>
+            <height> <copy src="parent()" trait="height"/> </height>
+            <width> <copy src="parent()" trait="width"/> </width>
+
+            <text name="olb_header_text">
+                <visible> &true; </visible>
+                <id> 110 </id>
+                <depth> 20 </depth>
+                <font> 5 </font>
+                <alpha> 200 </alpha>
+                <red> 0 </red>
+                <green> 0 </green>
+                <blue> 0 </blue>
+                <string> Welcome to Oblivion Less Bound </string>
+                <x>
+                    <copy src="olb_main_pane" trait="user0" />
+                    <sub> <copy src="me()" trait="width" />  </sub>
+                    <div> 2 </div>
+                </x>
+            </text>
+
+            <rect name="olb_header_panel_tab">
+                <visible> &true; </visible>
+                <id> 110 </id>
+                <depth> 20 </depth>
+                <x>
+                    <copy src="olb_main_pane" trait="user0" />
+                    <sub> <copy src="me()" trait="width" />  </sub>
+                    <div> 2 </div>
+                </x>
+                <y>
+                    <copy src="sibling(olb_header_text)" trait="y" />
+                    <add> <copy src="sibling(olb_header_text)" trait="height" /> </add>
+                    <add> 24 </add>
+                </y>
+                <height> <copy src="parent()" trait="height" /> </height>
+                <width>
+                    <copy src="child(olb_header_panel_box_preset)" trait="width" />
+                    <add> <copy src="child(olb_header_panel_box_custom)" trait="width" /> </add>
+                    <add> 24 </add>
+                </width>
+
+                <rect name="olb_header_panel_box_preset">
+                    <user0> 1 </user0> <!-- border visible? -->
+                    <height>
+                        <copy src="child(preset_text)" trait="width" />
+                        <add> 16 </add>
+                    </height>
+                    <width>
+                        <copy src="child(preset_text)" trait="width" />
+                        <add> 64 </add>
+                    </width>
+                    <x> <copy src="parent()" trait="x" /> </x>
+                    <y> <copy src="parent()" trait="y" /> </y>
+
+                    <rect name="preset_text_box">
+                        <include src="focus_box.xml"/>
+                        <depth> 15 </depth>
+                        <visible>
+                            <copy src="preset_text" trait="mouseover" />
+                            <eq> 1 </eq>
+                        </visible>
+                        <x> <copy src="sibling(preset_text)" trait="x" /> </x>
+                        <y> <copy src="parent()" trait="y" /> </y>
+                        <width> <copy src="sibling(preset_text)" trait="width" /> </width>
+                        <height> <copy src="sibling(preset_text)" trait="height" /> </height>
+                    </rect>
+
+                    <text name="preset_text">
+                        <visible> &true; </visible>
+                        <target> &true; </target>
+                        <id> 115 </id>
+                        <depth> 20 </depth>
+                        <font> 3 </font>
+                        <string> Preset </string>
+                        <alpha> 200 </alpha>
+                        <red> 0 </red>
+                        <blue> 0 </blue>
+                        <green> 0 </green>
+                        <x>
+                            <copy src="sibling(preset_left_border)" trait="x" />
+                            <add> 40 </add> <!-- add 8 px buffer to 40 px width -->
+                        </x>
+                        <y> <copy src="parent()" trait="y" /> </y>
+                    </text>
+
+                    <image name="preset_left_border">
+                        <depth> 20 </depth>
+                        <visible>
+                            <copy src="parent()" trait="user0" />
+                            <eq> 1 </eq>
+                        </visible>
+                        <filename> Menus\Shared\shared_decor_blue_left.dds </filename>
+                        <width> 64 </width>
+                        <height> 32 </height>
+                        <zoom> &scale; </zoom>
+                        <x>
+                            <copy src="parent()" trait="x" />
+                        </x>
+                        <y>
+                            <copy src="parent()" trait="y" />
+                            <add>
+                                <copy src="sibling(preset_text)" trait="height" />
+                                <div> 2 </div>
+                            </add>
+                            <sub> 8 </sub>
+                        </y>
+                    </image>
+
+                    <image name="preset_right_border">
+                        <depth> 20 </depth>
+                        <visible>
+                            <copy src="parent()" trait="user0" />
+                            <eq> 1 </eq>
+                        </visible>
+                        <filename> Menus\Shared\shared_decor_blue_right.dds </filename>
+                        <width> 64 </width>
+                        <height> 32 </height>
+                        <zoom> &scale; </zoom>
+                        <x>
+                            <copy src="parent()" trait="x" />
+                            <add> 40 </add> <!-- 32 px for image + 8 px buffer -->
+                            <add> <copy src="sibling(preset_text)" trait="width" /> </add>
+                            <add> 8 </add> <!-- add 8 px buffer -->
+                        </x>
+                        <y>
+                            <copy src="parent()" trait="y" />
+                            <add>
+                                <copy src="sibling(preset_text)" trait="height" />
+                                <div> 2 </div>
+                            </add>
+                            <sub> 8 </sub>
+                        </y>
+                    </image>
+
+                </rect>
+
+                <rect name="olb_header_panel_box_custom">
+                    <user0> 0 </user0> <!-- border visible? -->
+                    <height>
+                        <copy src="child(custom_text)" trait="width" />
+                        <add> 16 </add>
+                    </height>
+                    <width>
+                        <copy src="child(custom_text)" trait="width" />
+                        <add> 64 </add>
+                    </width>
+                    <x>
+                        <copy src="parent()" trait="x" />
+                        <add> <copy src="sibling(olb_header_panel_box_custom)" trait="width" /> </add>
+                        <add> 24 </add>
+                    </x>
+                    <y> <copy src="parent()" trait="y" /> </y>
+
+                    <rect name="custom_text_box">
+                        <include src="focus_box.xml"/>
+                        <depth> 15 </depth>
+                        <visible>
+                            <copy src="custom_text" trait="mouseover" />
+                            <eq> 1 </eq>
+                        </visible>
+                        <x> <copy src="sibling(custom_text)" trait="x" /> </x>
+                        <y> <copy src="parent()" trait="y" /> </y>
+                        <width> <copy src="sibling(custom_text)" trait="width" /> </width>
+                        <height> <copy src="sibling(custom_text)" trait="height" /> </height>
+                    </rect>
+
+                    <text name="custom_text">
+                        <visible> &true; </visible>
+                        <target> &true; </target>
+                        <x>
+                            <copy src="sibling(custom_left_border)" trait="x" />
+                            <add> 40 </add> <!-- add 8 px buffer to 32 px width -->
+                        </x>
+                        <id> 116 </id>
+                        <depth> 20 </depth>
+                        <font> 3 </font>
+                        <string> Custom </string>
+                        <alpha> 200 </alpha>
+                        <red> 0 </red>
+                        <blue> 0 </blue>
+                        <green> 0 </green>
+                        <y> <copy src="parent()" trait="y" /> </y>
+                    </text>
+
+                    <image name="custom_left_border">
+                        <depth> 20 </depth>
+                        <visible>
+                            <copy src="parent()" trait="user0" />
+                            <eq> 1 </eq>
+                        </visible>
+                        <filename> Menus\Shared\shared_decor_blue_left.dds </filename>
+                        <width> 64 </width>
+                        <height> 32 </height>
+                        <zoom> &scale; </zoom>
+                        <x>
+                            <copy src="parent()" trait="x" />
+                        </x>
+                        <y>
+                            <copy src="parent()" trait="y" />
+                            <add>
+                                <copy src="sibling(custom_text)" trait="height" />
+                                <div> 2 </div>
+                            </add>
+                            <sub> 8 </sub>
+                        </y>
+                    </image>
+
+                    <image name="custom_right_border">
+                        <depth> 20 </depth>
+                        <visible>
+                            <copy src="parent()" trait="user0" />
+                            <eq> 1 </eq>
+                        </visible>
+                        <filename> Menus\Shared\shared_decor_blue_right.dds </filename>
+                        <width> 64 </width>
+                        <height> 32 </height>
+                        <zoom> &scale; </zoom>
+                        <x>
+                            <copy src="parent()" trait="x" />
+                            <add> 40 </add> <!-- 32 px for image + 8 px buffer -->
+                            <add> <copy src="sibling(custom_text)" trait="width" /> </add>
+                            <add> 8 </add> <!-- add 8 px buffer -->
+                        </x>
+                        <y>
+                            <copy src="parent()" trait="y" />
+                            <add>
+                                <copy src="sibling(custom_text)" trait="height" />
+                                <div> 2 </div>
+                            </add>
+                            <sub> 8 </sub>
+                        </y>
+                    </image>
+                </rect>
+
+            </rect>
+
+        </rect>
     </rect>
 </menu>
