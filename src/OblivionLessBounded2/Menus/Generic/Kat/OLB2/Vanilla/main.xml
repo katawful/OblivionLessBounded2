@@ -43,13 +43,17 @@ __ Custom
             <sub src="me()" trait="height" />
             <div> 2 </div>
         </y>
+
         <rect name="olb_header">
             <visible> &true; </visible>
             <id> 110 </id>
             <depth> 20 </depth>
             <x> <copy src="parent()" trait="width"/> </x>
             <y> <copy src="parent()" trait="height"/> </y>
-            <height> <copy src="parent()" trait="height"/> </height>
+            <height>
+                <copy src="child(olb_header_panel_tab)" trait="height" />
+                <add> <copy src="child(olb_header_text)" trait="height" /> </add>
+            </height>
             <width> <copy src="parent()" trait="width"/> </width>
 
             <text name="olb_header_text">
@@ -83,7 +87,10 @@ __ Custom
                     <add> <copy src="sibling(olb_header_text)" trait="height" /> </add>
                     <add> 24 </add>
                 </y>
-                <height> <copy src="parent()" trait="height" /> </height>
+                <height>
+                    <copy src="child(olb_header_panel_box_preset)" trait="height" />
+                    <add> 16 </add>
+                </height>
                 <width>
                     <copy src="child(olb_header_panel_box_preset)" trait="width" />
                     <add> <copy src="child(olb_header_panel_box_custom)" trait="width" /> </add>
@@ -91,9 +98,15 @@ __ Custom
                 </width>
 
                 <rect name="olb_header_panel_box_preset">
-                    <user0> 1 </user0> <!-- border visible? -->
+
+                    <!--
+                    user0 - Border around text visible?
+                            This is done to simplify calls
+                    -->
+                    <user0> 1 </user0>
+
                     <height>
-                        <copy src="child(preset_text)" trait="width" />
+                        <copy src="child(preset_text)" trait="height" />
                         <add> 16 </add>
                     </height>
                     <width>
@@ -123,10 +136,12 @@ __ Custom
                         <depth> 20 </depth>
                         <font> 3 </font>
                         <string> Preset </string>
+
                         <alpha> 200 </alpha>
                         <red> 0 </red>
                         <blue> 0 </blue>
                         <green> 0 </green>
+
                         <x>
                             <copy src="sibling(preset_left_border)" trait="x" />
                             <add> 40 </add> <!-- add 8 px buffer to 40 px width -->
@@ -186,9 +201,15 @@ __ Custom
                 </rect>
 
                 <rect name="olb_header_panel_box_custom">
-                    <user0> 0 </user0> <!-- border visible? -->
+
+                    <!--
+                    user0 - Border around text visible?
+                            This is done to simplify calls
+                    -->
+                    <user0> 0 </user0>
+
                     <height>
-                        <copy src="child(custom_text)" trait="width" />
+                        <copy src="child(custom_text)" trait="height" />
                         <add> 16 </add>
                     </height>
                     <width>
