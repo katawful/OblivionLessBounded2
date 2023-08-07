@@ -286,5 +286,402 @@ __ Custom
             </rect>
 
         </rect>
+
+        <rect name="olb_options_pane">
+            <depth> 20 </depth>
+            <id> 200 </id>
+            <visible> &true; </visible>
+            <width> <copy src="parent()" trait="width" /> </width>
+            <height>
+                <copy src="parent()" trait="height" />
+                <sub> <copy src="olb_header" trait="height" /> </sub>
+                <sub> 48 </sub>
+            </height>
+            <x> 0 </x>
+            <y> <copy src="parent()" trait="y" /> </y>
+
+            <image name="border_left">
+                <filename> Menus\Stats\stat_border_vertical_1.dds </filename>
+                <depth> 20 </depth>
+                <visible> &true; </visible>
+                <zoom> &scale; </zoom>
+                <width> 8 </width>
+                <height>
+                    <copy src="parent()" trait="height" />
+                    <sub> 64 </sub>
+                </height>
+                <x> <copy src="parent()" trait="x" /> </x>
+                <y>
+                    <copy src="parent()" trait="y" />
+                    <add> 12 </add>
+                </y>
+            </image>
+
+            <image name="border_top">
+                <filename> Menus\Stats\stat_border_horizontal_1.dds </filename>
+                <depth> 20 </depth>
+                <visible> &true; </visible>
+                <zoom> &scale; </zoom>
+                <height> 8 </height>
+                <width> 1200 </width>
+                <x> <copy src="parent()" trait="x" /> </x>
+                <y>
+                    <copy src="parent()" trait="y" />
+                    <sub> 12 </sub>
+                </y>
+            </image>
+
+            <image name="olb_options_scroll_bar_preset">
+                <include src="vertical_scroll.xml"/>
+                <depth> 20 </depth>
+                <id> &Scroll; </id>
+                <x>
+                    <copy src="parent()" trait="width" />
+                    <sub> 24 </sub>
+                </x>
+                <y>
+                    <copy src="parent()" trait="y" />
+                    <add> 12 </add>
+                </y>
+                <height>
+                    <copy src="parent()" trait="height" />
+                    <sub> 64 </sub>
+                </height>
+                <user1> 0 </user1> <!-- code set - minimum range value -->
+                <user2>
+                    <copy src="olb_options_list_preset" trait="child_count" />
+                    <sub src="me()" trait="user8" /> <!-- remove the viewable items -->
+                    <add> 2 </add>
+                </user2> <!-- maximum range value -->
+                <user3> 1 </user3> <!-- arrow step distance -->
+                <user4> 6 </user4> <!-- bar jump distance -->
+                <user5> 0 </user5> <!-- scroll bar position - set to 0 here -->
+                <user6> 33 </user6> <!-- marker's id - must change to enable dragging -->
+                <!-- user7 --> <!-- current value -->
+                <user8> 11 </user8> <!-- number of items visible -->
+            </image>
+
+            <rect name="olb_options_list_preset">
+                <id> 300 </id>
+                <depth> 15 </depth>
+                <visible> &true; </visible>
+                <width> <copy src="parent()" trait="width" /> </width>
+                <height> <copy src="parent()" trait="height" /> </height>
+                <x>
+                    <copy src="parent()" trait="x" />
+                    <add> 12 </add>
+                </x>
+                <y>
+                    <copy src="parent()" trait="y" />
+                </y>
+                <target> &false; </target> <!-- the rect isn't what's targeted -->
+                <xdefault> &true; </xdefault> <!-- Engine value, unknown -->
+                <xlist> &xlist; </xlist> <!-- This tells the game that this rect holds the list -->
+                <xscroll> <ref src="olb_options_scroll_bar_preset" trait="user5" /> </xscroll>
+            </rect>
+
+            <image name="olb_options_scroll_bar_custom">
+                <include src="vertical_scroll.xml"/>
+                <depth> 20 </depth>
+                <id> &Scroll; </id>
+                <x>
+                    <copy src="parent()" trait="width" />
+                    <sub> 24 </sub>
+                </x>
+                <y>
+                    <copy src="parent()" trait="y" />
+                    <add> 12 </add>
+                </y>
+                <height>
+                    <copy src="parent()" trait="height" />
+                    <sub> 64 </sub>
+                </height>
+                <user1> 0 </user1> <!-- code set - minimum range value -->
+                <user2>
+                    <copy src="olb_options_list_custom" trait="child_count" />
+                    <sub src="me()" trait="user8" /> <!-- remove the viewable items -->
+                    <add> 2 </add>
+                </user2> <!-- maximum range value -->
+                <user3> 1 </user3> <!-- arrow step distance -->
+                <user4> 6 </user4> <!-- bar jump distance -->
+                <user5> 0 </user5> <!-- scroll bar position - set to 0 here -->
+                <user6> 33 </user6> <!-- marker's id - must change to enable dragging -->
+                <!-- user7 --> <!-- current value -->
+                <user8> 11 </user8> <!-- number of items visible -->
+            </image>
+
+            <rect name="olb_options_list_custom">
+                <id> 300 </id>
+                <depth> 15 </depth>
+                <visible> &false; </visible>
+                <width> <copy src="parent()" trait="width" /> </width>
+                <height> <copy src="parent()" trait="height" /> </height>
+                <x>
+                    <copy src="parent()" trait="x" />
+                    <add> 12 </add>
+                </x>
+                <y>
+                    <copy src="parent()" trait="y" />
+                </y>
+                <target> &false; </target> <!-- the rect isn't what's targeted -->
+                <xdefault> &true; </xdefault> <!-- Engine value, unknown -->
+                <xlist> &xlist; </xlist> <!-- This tells the game that this rect holds the list -->
+                <xscroll> <ref src="olb_options_scroll_bar_custom" trait="user5" /> </xscroll>
+            </rect>
+
+        </rect>
     </rect>
+
+    <template name="olb_temp_dropdown_custom">
+        <rect name="olb_dropdown_item">
+            <id> 300 </id>
+            <target> &true; </target> <!-- should be set true so you can scroll -->
+            <repeatvertical> &true; </repeatvertical> <!-- needed for scrolling -->
+            <alpha> 0 </alpha>
+            <width> <copy src="parent()" trait="width" /> </width>
+            <height> 48 </height>
+            <clips> &true; </clips> <!-- needed to disappear behind other tiles -->
+            <locus> &false; </locus>
+            <x> <copy src="parent()" trait="x" /> </x>
+
+            <!--
+            1. Shift list items to parent position
+            2. Add the modified Y position adjustment from list index and current scroll
+            -->
+            <y>
+                <copy src="parent()" trait="y" />
+                <add>
+                    <copy> 48 </copy>
+                    <mul>
+                        <copy src="me()" trait="listindex" />
+                        <sub src="olb_options_scroll_bar_custom" trait="user7" />
+                    </mul>
+                </add>
+            </y>
+            <listclip>
+                <copy src="me()" trait="listindex"/>
+                <gte>
+                    <copy src="olb_options_scroll_bar_custom" trait="user7"/>
+                    <add src="olb_options_scroll_bar_custom" trait="user8"/>
+                    <sub> 2 </sub>
+                </gte>
+                <or>
+                    <copy src="me()" trait="listindex"/>
+                    <lt src="olb_options_scroll_bar_custom" trait="user7"/>
+                </or>
+            </listclip>
+            <listindex> 0 </listindex> <!-- the current index for the item, set to 0 here -->
+            <user1> </user1> <!-- option name -->
+            <user2> test </user2> <!-- default option -->
+            <xdefault> &false; </xdefault> <!-- Engine value, unknown but must be set -->
+            <xlist> &xitem; </xlist> <!-- this is the item of the list, must be set -->
+            <xup> &prev; </xup>
+            <xdown> &next; </xdown>
+            <xscroll>
+                <copy src="me()" trait="listindex" />
+                <sub>
+                    <copy src="olb_options_scroll_bar_custom" trait="user8"/>
+                    <div> 2 </div>
+                    <ceil> 0 </ceil>
+                </sub>
+                <add> 1 </add>
+            </xscroll>
+
+            <text name="olb_dropdown_option_name">
+                <id> 300 </id>
+                <depth> 17 </depth>
+                <string> <copy src="parent()" trait="user1" /> </string>
+                <justify> &left; </justify>
+                <font> 3 </font>
+                <red> 0 </red>
+                <green> 0 </green>
+                <blue> 0 </blue>
+                <alpha> 200 </alpha>
+                <wrapwidth> <copy src="parent()" trait="width" /> </wrapwidth>
+                <wraplines> 1 </wraplines>
+                <clips> &true; </clips>
+                <x> <copy src="parent()" trait="x" /> </x>
+                <y> <copy src="parent()" trait="y" /></y>
+            </text>
+
+            <text name="olb_dropdown_option_select">
+                <id> 310 </id>
+                <depth> 17 </depth>
+                <string> <copy src="parent()" trait="user2" /> </string>
+                <font> 3 </font>
+                <red> 0 </red>
+                <green> 0 </green>
+                <blue> 0 </blue>
+                <alpha> 200 </alpha>
+                <target> &true; </target>
+                <clips> &true; </clips>
+                <focus> &true; </focus>
+                <focussize> 20 </focussize>
+                <focusinset> 0 </focusinset>
+                <justify> &right; </justify> <!-- better handle padding -->
+
+                <!-- 1. get parent x
+                     2. add parent width to move to right
+                     3. remove width of string
+                     4. remove padding added to parent-->
+                <x>
+                    <copy src="parent()" trait="x" />
+                    <add> <copy src="parent()" trait="width" /> </add>
+                    <sub> <copy src="me()" trait="width" /> </sub>
+                    <sub> 24 </sub>
+                </x>
+
+                <y> <copy src="parent()" trait="y" /></y>
+            </text>
+
+            <rect name="olb_dropdown_option_focus">
+                <include src="focus_box.xml"/>
+                <depth> 15 </depth>
+                <visible>
+                    <copy src="olb_dropdown_option_select" trait="mouseover" />
+                    <eq> 1 </eq>
+                </visible>
+
+                <!--
+                Text is right aligned, but position is left aligned
+                -->
+                <x>
+                    <copy src="sibling(olb_dropdown_option_select)" trait="x" />
+                    <sub> <copy src="sibling(olb_dropdown_option_select)" trait="width" /> </sub>
+                </x>
+
+                <y> <copy src="sibling(olb_dropdown_option_select)" trait="y" /> </y>
+                <width> <copy src="sibling(olb_dropdown_option_select)" trait="width" /> </width>
+                <height> <copy src="sibling(olb_dropdown_option_select)" trait="height" /> </height>
+            </rect>
+
+        </rect>
+    </template>
+
+    <template name="olb_temp_dropdown_preset">
+        <rect name="olb_dropdown_item">
+            <id> 300 </id>
+            <target> &true; </target> <!-- should be set true so you can scroll -->
+            <repeatvertical> &true; </repeatvertical> <!-- needed for scrolling -->
+            <alpha> 0 </alpha>
+            <width> <copy src="parent()" trait="width" /> </width>
+            <height> 48 </height>
+            <clips> &true; </clips> <!-- needed to disappear behind other tiles -->
+            <locus> &false; </locus>
+            <x> <copy src="parent()" trait="x" /> </x>
+
+            <!--
+            1. Shift list items to parent position
+            2. Add the modified Y position adjustment from list index and current scroll
+            -->
+            <y>
+                <copy src="parent()" trait="y" />
+                <add>
+                    <copy> 48 </copy>
+                    <mul>
+                        <copy src="me()" trait="listindex" />
+                        <sub src="olb_options_scroll_bar_preset" trait="user7" />
+                    </mul>
+                </add>
+            </y>
+            <listclip>
+                <copy src="me()" trait="listindex"/>
+                <gte>
+                    <copy src="olb_options_scroll_bar_preset" trait="user7"/>
+                    <add src="olb_options_scroll_bar_preset" trait="user8"/>
+                    <sub> 2 </sub>
+                </gte>
+                <or>
+                    <copy src="me()" trait="listindex"/>
+                    <lt src="olb_options_scroll_bar_preset" trait="user7"/>
+                </or>
+            </listclip>
+            <listindex> 0 </listindex> <!-- the current index for the item, set to 0 here -->
+            <user1> </user1> <!-- option name -->
+            <user2> test </user2> <!-- default option -->
+            <xdefault> &false; </xdefault> <!-- Engine value, unknown but must be set -->
+            <xlist> &xitem; </xlist> <!-- this is the item of the list, must be set -->
+            <xup> &prev; </xup>
+            <xdown> &next; </xdown>
+            <xscroll>
+                <copy src="me()" trait="listindex" />
+                <sub>
+                    <copy src="olb_options_scroll_bar_preset" trait="user8"/>
+                    <div> 2 </div>
+                    <ceil> 0 </ceil>
+                </sub>
+                <add> 1 </add>
+            </xscroll>
+
+            <text name="olb_dropdown_option_name">
+                <id> 300 </id>
+                <depth> 17 </depth>
+                <string> <copy src="parent()" trait="user1" /> </string>
+                <justify> &left; </justify>
+                <font> 3 </font>
+                <red> 0 </red>
+                <green> 0 </green>
+                <blue> 0 </blue>
+                <alpha> 200 </alpha>
+                <wrapwidth> <copy src="parent()" trait="width" /> </wrapwidth>
+                <wraplines> 1 </wraplines>
+                <clips> &true; </clips>
+                <x> <copy src="parent()" trait="x" /> </x>
+                <y> <copy src="parent()" trait="y" /></y>
+            </text>
+
+            <text name="olb_dropdown_option_select">
+                <id> 310 </id>
+                <depth> 17 </depth>
+                <string> <copy src="parent()" trait="user2" /> </string>
+                <font> 3 </font>
+                <red> 0 </red>
+                <green> 0 </green>
+                <blue> 0 </blue>
+                <alpha> 200 </alpha>
+                <target> &true; </target>
+                <clips> &true; </clips>
+                <focus> &true; </focus>
+                <focussize> 20 </focussize>
+                <focusinset> 0 </focusinset>
+                <justify> &right; </justify> <!-- better handle padding -->
+
+                <!-- 1. get parent x
+                     2. add parent width to move to right
+                     3. remove width of string
+                     4. remove padding added to parent-->
+                <x>
+                    <copy src="parent()" trait="x" />
+                    <add> <copy src="parent()" trait="width" /> </add>
+                    <sub> <copy src="me()" trait="width" /> </sub>
+                    <sub> 24 </sub>
+                </x>
+
+                <y> <copy src="parent()" trait="y" /></y>
+            </text>
+
+            <rect name="olb_dropdown_option_focus">
+                <include src="focus_box.xml"/>
+                <depth> 15 </depth>
+                <visible>
+                    <copy src="olb_dropdown_option_select" trait="mouseover" />
+                    <eq> 1 </eq>
+                </visible>
+
+                <!--
+                Text is right aligned, but position is left aligned
+                -->
+                <x>
+                    <copy src="sibling(olb_dropdown_option_select)" trait="x" />
+                    <sub> <copy src="sibling(olb_dropdown_option_select)" trait="width" /> </sub>
+                </x>
+
+                <y> <copy src="sibling(olb_dropdown_option_select)" trait="y" /> </y>
+                <width> <copy src="sibling(olb_dropdown_option_select)" trait="width" /> </width>
+                <height> <copy src="sibling(olb_dropdown_option_select)" trait="height" /> </height>
+            </rect>
+
+        </rect>
+
+    </template>
 </menu>
